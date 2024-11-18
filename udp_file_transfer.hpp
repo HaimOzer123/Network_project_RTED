@@ -32,8 +32,12 @@ enum OperationCode {
 };
 
 /**
- * @struct Packet
- * @brief Structure for UDP packets used in file transfer.
+ * @class Packet
+ * @brief Represents a packet used in the UDP File Transfer System.
+ *
+ * This structure defines the format of packets exchanged between the client
+ * and the server in the file transfer system. It includes operation codes,
+ * filenames, data payload, and a checksum for integrity.
  */
 struct Packet {
     int operationID;           ///< Operation code (RRQ, WRQ, DEL)

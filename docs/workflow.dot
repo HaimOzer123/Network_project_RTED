@@ -1,0 +1,8 @@
+digraph UDP_File_Transfer {
+    Client -> Server [label="Request (RRQ/WRQ/DEL)"];
+    Server -> Client [label="Acknowledgment (ACK)"];
+    Client -> Server [label="File Data (WRQ)"];
+    Server -> Backup [label="Save Backup"];
+    Backup -> Server [label="Recovery on Demand"];
+    Server -> Client [label="File Data (RRQ)"];
+}
