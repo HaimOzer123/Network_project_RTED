@@ -8,6 +8,18 @@
 
 #include <string>
 #include <vector>
+#include <cstdint>
+
+#ifdef _WIN32
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#pragma comment(lib, "Ws2_32.lib")
+#else
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <cstring>
+#endif
 
 /// Maximum packet size for UDP
 constexpr size_t PACKET_SIZE = 512;
@@ -25,8 +37,9 @@ enum OperationCode {
  */
 struct Packet {
     int operationID;           ///< Operation code (RRQ, WRQ, DEL)
-    std::string filename;      ///< File name to operate on
-    std::vector<uint8_t> data; ///< File data (for upload/download)
+    char filename[256];        ///< File name to operate on
+    uint8_t data[PACKET_SIZE]; ///< File data
+    uint32_t checksum;         ///< Checksum for file integrity
 };
 
 /**
@@ -49,5 +62,12 @@ std::vector<uint8_t> encrypt_data(const std::vector<uint8_t>& data);
  * @return Decrypted data.
  */
 std::vector<uint8_t> decrypt_data(const std::vector<uint8_t>& data);
+
+// Cross-platform socket close
+#ifdef _WIN32
+#define CLOSE_SOCKET closesocket
+#else
+#define CLOSE_SOCKET close
+#endif
 
 #endif // UDP_FILE_TRANSFER_HPP
