@@ -42,7 +42,7 @@ void send_request(const std::string& serverIP, int port, const Packet& packet) {
     serverAddr.sin_port = htons(port);
     serverAddr.sin_addr.s_addr = inet_addr(serverIP.c_str());
 
-    sendto(sockfd, &packet, sizeof(Packet), 0, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
+    sendto(sockfd, (const char*)&packet, sizeof(Packet), 0, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
 
     char ack[PACKET_SIZE];
     socklen_t len = sizeof(serverAddr);

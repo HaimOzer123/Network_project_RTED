@@ -15,6 +15,14 @@ const std::string BACKUP_STORAGE_DIR = "./backup_files/";
 
 #ifdef _WIN32
 /**
+ * @brief Defines the ssize_t type for Windows.
+ * 
+ */
+typedef int ssize_t;
+#endif
+
+#ifdef _WIN32
+/**
  * @brief Initializes the Windows Socket API.
  * This function must be called before any socket operations on Windows.
  */
@@ -61,7 +69,7 @@ void start_server(int port) {
         sockaddr_in clientAddr;
         socklen_t len = sizeof(clientAddr);
 
-        recvfrom(sockfd, &packet, sizeof(Packet), 0, (struct sockaddr*)&clientAddr, &len);
+        recvfrom(sockfd, (char*)&packet, sizeof(Packet), 0, (struct sockaddr*)&clientAddr, &len);
 
         switch (packet.operationID) {
             case RRQ: {
