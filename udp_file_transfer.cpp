@@ -9,6 +9,7 @@
 #include <numeric>
 #include <fstream>
 #include <string>
+#include <openssl/aes.h>
 #include <openssl/evp.h>
 #include <openssl/rand.h>
 #include <sstream>
@@ -114,7 +115,7 @@ void log_error(const std::string& message) {
  * @param filename The original filename.
  * @return std::string The versioned filename with a timestamp appended.
  */
-std::string generate_versioned_filename(const std::string& filename) {
+ std::string generate_versioned_filename(const std::string& filename) {
     auto now = std::chrono::system_clock::now();
     auto time = std::chrono::system_clock::to_time_t(now);
 

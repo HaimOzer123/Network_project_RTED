@@ -1,0 +1,28 @@
+[2024-11-19 12:45:24] Client IP: 127.0.0.1, Port: 44718 - Unknown operation ID: 426841597
+[2024-11-19 12:45:24] Client IP: 127.0.0.1, Port: 44718 - Unknown operation ID: -1706445771
+[2024-11-19 12:45:33] Client IP: 127.0.0.1, Port: 44718 - File not found: ./server_files/example.txt
+[2024-11-19 12:46:12] Client IP: 127.0.0.1, Port: 55753 - Unknown operation ID: 2125185437
+[2024-11-19 12:46:12] Client IP: 127.0.0.1, Port: 55753 - Unknown operation ID: 427612638
+[2024-11-19 12:46:36] Client IP: 127.0.0.1, Port: 55753 - File not found: ./server_files/example.txt
+[2024-11-19 12:46:44] Client IP: 127.0.0.1, Port: 38120 - Checksum mismatch for file: example.txt
+[2024-11-19 12:46:44] Client IP: 127.0.0.1, Port: 38120 - Unknown operation ID: -754326289
+[2024-11-19 12:46:51] Client IP: 127.0.0.1, Port: 38120 - Failed to delete file: ./server_files/example.txt
+[2024-11-19 12:48:07] Client IP: 127.0.0.1, Port: 58007 - Checksum mismatch for file: example.txt
+[2024-11-19 12:48:07] Client IP: 127.0.0.1, Port: 58007 - Unknown operation ID: -2132253119
+[2024-11-19 12:48:16] Client IP: 127.0.0.1, Port: 58007 - Checksum mismatch for file: example.txt
+[2024-11-19 12:48:23] Client IP: 127.0.0.1, Port: 33161 - Checksum mismatch for file: example.txt
+[2024-11-19 12:48:23] Client IP: 127.0.0.1, Port: 33161 - Unknown operation ID: -984225035
+[2024-11-19 12:48:56] Client IP: 127.0.0.1, Port: 33161 - Checksum mismatch for file: example.txt
+[2024-11-19 12:50:07] Client IP: 127.0.0.1, Port: 38776 - Unknown operation ID: -1414675492
+[2024-11-19 12:50:07] Client IP: 127.0.0.1, Port: 38776 - Unknown operation ID: 254011367
+[2024-11-19 12:50:28] Client IP: 127.0.0.1, Port: 38776 - File not found: ./server_files/example.txt
+[2024-11-19 12:50:36] Client IP: 127.0.0.1, Port: 43822 - Unknown operation ID: 464132685
+[2024-11-19 12:50:36] Client IP: 127.0.0.1, Port: 43822 - Unknown operation ID: -1458302153
+[2024-11-19 12:50:43] Client IP: 127.0.0.1, Port: 43822 - File not found: ./server_files/example1.txt
+[2024-11-19 12:51:36] Client IP: 127.0.0.1, Port: 35145 - Unknown operation ID: 1054624974
+[2024-11-19 12:51:36] Client IP: 127.0.0.1, Port: 35145 - Unknown operation ID: -393778743
+[2024-11-19 12:51:43] Client IP: 127.0.0.1, Port: 35145 - File not found: ./server_files/example.txt
+[2024-11-19 12:52:08] Client IP: 127.0.0.1, Port: 41653 - Unknown operation ID: -512746546
+[2024-11-19 12:52:08] Client IP: 127.0.0.1, Port: 41653 - Unknown operation ID: -1113335723
+[2024-11-19 12:52:36] Client IP: 127.0.0.1, Port: 41653 - Failed to delete file: ./server_files/example.txt
+[2024-11-19 12:53:04] Client IP: 127.0.0.1, Port: 41653 - File not found: ./server_files/example.txt

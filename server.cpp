@@ -56,20 +56,6 @@ void log_error(const std::string& message, const sockaddr_in& clientAddr) {
 }
 
 /**
- * @brief Generates a versioned filename with a timestamp.
- * @param filename The original filename.
- * @return std::string The versioned filename.
- */
-std::string generate_versioned_filename(const std::string& filename) {
-    auto now = std::chrono::system_clock::now();
-    auto time = std::chrono::system_clock::to_time_t(now);
-
-    std::ostringstream oss;
-    oss << filename << "_v" << std::put_time(std::localtime(&time), "%Y%m%d%H%M%S");
-    return oss.str();
-}
-
-/**
  * @brief Handles a single client request.
  * @param sockfd The server socket file descriptor.
  * @param clientAddr The client address structure.
