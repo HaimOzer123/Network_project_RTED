@@ -223,7 +223,15 @@ constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>ACK_TIMEOUT<
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The computed checksum as a 32-bit unsigned integer. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The computed checksum as a 32-bit unsigned integer.</dd></dl>
+<p>Computes a checksum for a given data vector.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>A vector of bytes representing the data for which the checksum is calculated. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>uint32_t The computed checksum as a 32-bit unsigned integer. </dd></dl>
 
 </div>
 </div>
@@ -249,7 +257,16 @@ constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>ACK_TIMEOUT<
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The decrypted data as a vector of uint8_t. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The decrypted data as a vector of uint8_t.</dd></dl>
+<p>Decrypts a block of data.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>A vector of bytes representing the data to decrypt. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;uint8_t&gt; A vector of bytes representing the decrypted data.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function uses the same XOR operation as <code>encrypt_data</code>, since XOR is symmetric. </dd></dl>
 
 </div>
 </div>
@@ -275,7 +292,16 @@ constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>ACK_TIMEOUT<
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The encrypted data as a vector of uint8_t. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The encrypted data as a vector of uint8_t.</dd></dl>
+<p>Encrypts a block of data.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>A vector of bytes representing the data to encrypt. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;uint8_t&gt; A vector of bytes representing the encrypted data.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function uses XOR encryption with a fixed key (0xAA). It is a simple and insecure encryption method, suitable only for demonstration purposes. </dd></dl>
 
 </div>
 </div>
@@ -288,7 +314,7 @@ constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>ACK_TIMEOUT<
         <tr>
           <td class="memname">void log_error </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>error_message</em></span></td><td>)</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>message</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -297,14 +323,7 @@ constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>ACK_TIMEOUT<
 <p>Logs an error message to a file. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">message</td><td>The error message to log.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Logs an error message to a file.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">error_message</td><td>The error message to log. </td></tr>
+    <tr><td class="paramname">message</td><td>The error message to log. </td></tr>
   </table>
   </dd>
 </dl>
@@ -360,7 +379,18 @@ constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>ACK_TIMEOUT<
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the checksum is valid, false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the checksum is valid, false otherwise.</dd></dl>
+<p>Verifies the checksum of a given data block.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>A vector of bytes representing the data to verify. </td></tr>
+    <tr><td class="paramname">checksum</td><td>The expected checksum value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true If the checksum matches the calculated checksum for the data. </dd>
+<dd>
+false If the checksum does not match. </dd></dl>
 
 </div>
 </div>

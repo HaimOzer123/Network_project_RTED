@@ -11,23 +11,28 @@
 #include <chrono>
 
 #ifdef _WIN32
-typedef int ssize_t;
+#include <BaseTsd.h>
+typedef SSIZE_T ssize_t; // Use MinGW-provided type
 #endif
+
 
 /**
  * @brief Displays the main menu to the user.
  */
 void show_menu() {
     std::cout << "\n=== UDP File Transfer Client ===\n";
-    std::cout << "1. Download a file (RRQ)\n";
-    std::cout << "2. Upload a file (WRQ)\n";
-    std::cout << "3. Delete a file (DEL)\n";
+    std::cout << "1. Download a file from the server (RRQ)\n";
+    std::cout << "2. Upload a file to the server (WRQ)\n";
+    std::cout << "3. Delete a file on the server (DEL)\n";
     std::cout << "4. Exit\n";
     std::cout << "Choose an option (1-4): ";
 }
 
 /**
  * @brief Sends a request packet to the server and waits for acknowledgment.
+ * @details This function will retry sending the request up to 3 times if no acknowledgment is received.
+ *          The user will be prompted to retry if the maximum number of attempts is reached.
+ *          The function returns true if the acknowledgment was received; false otherwise.
  * @param sockfd The socket file descriptor.
  * @param serverAddr The server address structure.
  * @param packet The packet to send.
@@ -39,8 +44,9 @@ bool send_request_with_ack(int sockfd, const sockaddr_in& serverAddr, const Pack
 
     for (int attempt = 0; attempt < 3; ++attempt) { // Retry up to 3 times
         sendto(sockfd, (char*)&packet, sizeof(Packet), 0, (struct sockaddr*)&serverAddr, serverLen);
+
         fd_set readfds;
-        struct timeval timeout = {0, ACK_TIMEOUT * 1000}; // ACK_TIMEOUT in microseconds
+        struct timeval timeout = {0, ACK_TIMEOUT * 1000};
         FD_ZERO(&readfds);
         FD_SET(sockfd, &readfds);
 
@@ -51,9 +57,12 @@ bool send_request_with_ack(int sockfd, const sockaddr_in& serverAddr, const Pack
         }
     }
 
-    std::cerr << "Acknowledgment not received after 3 attempts\n";
-    return false;
+    std::cerr << "Acknowledgment not received after 3 attempts. Would you like to retry? (y/n): ";
+    char choice;
+    std::cin >> choice;
+    return (choice == 'y' || choice == 'Y') ? send_request_with_ack(sockfd, serverAddr, packet) : false;
 }
+
 
 /**
  * @brief Sends a Read Request (RRQ) to download a file from the server.

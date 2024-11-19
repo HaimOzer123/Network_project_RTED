@@ -153,7 +153,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> ()</td></tr>
 </div><div class="memdoc">
 
 <p>Sends a request packet to the server and waits for acknowledgment. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function will retry sending the request up to 3 times if no acknowledgment is received. The user will be prompted to retry if the maximum number of attempts is reached. The function returns true if the acknowledgment was received; false otherwise. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">sockfd</td><td>The socket file descriptor. </td></tr>
     <tr><td class="paramname">serverAddr</td><td>The server address structure. </td></tr>

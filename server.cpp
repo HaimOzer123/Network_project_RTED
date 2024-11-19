@@ -13,8 +13,10 @@
 #include <filesystem>
 
 #ifdef _WIN32
-typedef int ssize_t;
+#include <BaseTsd.h>
+typedef SSIZE_T ssize_t; // Use MinGW-provided type
 #endif
+
 
 const std::string SERVER_STORAGE_DIR = "./server_files/";
 const std::string BACKUP_STORAGE_DIR = "./backup_files/";
@@ -36,12 +38,25 @@ void validate_directories() {
 
 /**
  * @brief Logs errors to a file.
- * @param error_message The error message to log.
+ * @details Logs the error message along with the client IP and port to a file named `server_error.log`.
+ * @param message The error message to log.
  */
-void log_error(const std::string& error_message) {
+void log_error(const std::string& message, const sockaddr_in& clientAddr) {
     std::ofstream log("server_error.log", std::ios::app);
-    log << error_message << std::endl;
+    log << "Client IP: " << inet_ntoa(clientAddr.sin_addr)
+        << ", Port: " << ntohs(clientAddr.sin_port) << " - " << message << std::endl;
 }
+
+/**
+ * @brief Ensure that the file is removed in case of an upload error.
+ * @param message The error message to log.
+ */
+void handle_upload_error(const std::string& filePath) {
+    if (std::filesystem::exists(filePath)) {
+        std::filesystem::remove(filePath);
+    }
+}
+
 
 /**
  * @brief Handles a single client request.
@@ -67,7 +82,7 @@ void handle_client(int sockfd, sockaddr_in clientAddr, Packet packet) {
             while (file.read(buffer, PACKET_SIZE) || file.gcount() > 0) {
                 std::vector<uint8_t> encrypted = encrypt_data(
                     std::vector<uint8_t>(buffer, buffer + file.gcount()));
-                Packet response = {ACK, {}, {}, 0, file.gcount()};
+                Packet response = {ACK, {}, {}, 0, static_cast<size_t>(file.gcount())};
                 std::memcpy(response.data, encrypted.data(), encrypted.size());
                 response.checksum = calculate_checksum(encrypted);
                 sendto(sockfd, (char*)&response, sizeof(Packet), 0, (struct sockaddr*)&clientAddr, clientLen);
