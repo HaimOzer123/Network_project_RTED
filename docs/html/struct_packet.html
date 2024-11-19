@@ -100,7 +100,7 @@ $(function(){ initResizable(false); });
 Public Attributes</h2></td></tr>
 <tr class="memitem:aada6205cad64a33150a875ddf9a6aabf" id="r_aada6205cad64a33150a875ddf9a6aabf"><td class="memItemLeft" align="right" valign="top"><a id="aada6205cad64a33150a875ddf9a6aabf" name="aada6205cad64a33150a875ddf9a6aabf"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>operationID</b></td></tr>
-<tr class="memdesc:aada6205cad64a33150a875ddf9a6aabf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operation code (e.g., RRQ, WRQ, DEL) <br /></td></tr>
+<tr class="memdesc:aada6205cad64a33150a875ddf9a6aabf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operation code (e.g., RRQ, WRQ, DEL, ACK, ERROR_PACKET) <br /></td></tr>
 <tr class="separator:aada6205cad64a33150a875ddf9a6aabf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58011e2b9a213250851242c41dbda5e5" id="r_a58011e2b9a213250851242c41dbda5e5"><td class="memItemLeft" align="right" valign="top"><a id="a58011e2b9a213250851242c41dbda5e5" name="a58011e2b9a213250851242c41dbda5e5"></a>
 char&#160;</td><td class="memItemRight" valign="bottom"><b>filename</b> [256]</td></tr>
@@ -121,7 +121,6 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>dataSize</b></td></
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a packet used in the UDP File Transfer System. </p>
-<p>Defines the format of packets exchanged between the client and server. Each packet includes the operation code, the file name, data payload, and a checksum to ensure data integrity. </p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="udp__file__transfer_8hpp_source.html">udp_file_transfer.hpp</a></li>
 </ul>

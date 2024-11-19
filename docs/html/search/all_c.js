@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['rrq_0',['RRQ',['../udp__file__transfer_8hpp.html#aabbe492c60331b13038e39d4207940e0ae163e0b629b656588875c6da584be430',1,'udp_file_transfer.hpp']]],
-  ['run_1',['2. Run',['../index.html#autotoc_md18',1,'']]],
-  ['run_20the_20project_2',['How to Run the Project',['../index.html#autotoc_md16',1,'']]]
+  ['packet_0',['Packet',['../struct_packet.html',1,'']]],
+  ['packet_5fsize_1',['PACKET_SIZE',['../udp__file__transfer_8hpp.html#a8e5db1eccb7e9c6932593d8865d3c7d6',1,'udp_file_transfer.hpp']]],
+  ['project_2',['How to Run the Project',['../index.html#autotoc_md16',1,'']]]
 ];

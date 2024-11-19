@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['backup_5fstorage_5fdir_0',['BACKUP_STORAGE_DIR',['../server_8cpp.html#a5cbad9f300cd7f5d88bf37bd2ac7ab53',1,'server.cpp']]]
+  ['ack_5ftimeout_0',['ACK_TIMEOUT',['../udp__file__transfer_8hpp.html#ae6d6d706e9c97138f897b2944eb7a2d7',1,'udp_file_transfer.hpp']]]
 ];

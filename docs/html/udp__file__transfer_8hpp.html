@@ -94,15 +94,18 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 
-<p>Contains shared constants, enums, structs, and helper functions for the UDP File Transfer System.  
+<p>UDP File Transfer System Header File.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;thread&gt;</code><br />
+<code>#include &lt;mutex&gt;</code><br />
+<code>#include &lt;chrono&gt;</code><br />
+<code>#include &lt;cstring&gt;</code><br />
 <code>#include &lt;netinet/in.h&gt;</code><br />
 <code>#include &lt;arpa/inet.h&gt;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
-<code>#include &lt;cstring&gt;</code><br />
 </div>
 <p><a href="udp__file__transfer_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -114,15 +117,21 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a89a7b1b0ea2e73dc31bed4fcd9b857eb" id="r_a89a7b1b0ea2e73dc31bed4fcd9b857eb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a89a7b1b0ea2e73dc31bed4fcd9b857eb">CLOSE_SOCKET</a>&#160;&#160;&#160;close</td></tr>
-<tr class="memdesc:a89a7b1b0ea2e73dc31bed4fcd9b857eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cross-platform function to close a socket.  <br /></td></tr>
+<tr class="memitem:a89a7b1b0ea2e73dc31bed4fcd9b857eb" id="r_a89a7b1b0ea2e73dc31bed4fcd9b857eb"><td class="memItemLeft" align="right" valign="top"><a id="a89a7b1b0ea2e73dc31bed4fcd9b857eb" name="a89a7b1b0ea2e73dc31bed4fcd9b857eb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CLOSE_SOCKET</b>&#160;&#160;&#160;close</td></tr>
+<tr class="memdesc:a89a7b1b0ea2e73dc31bed4fcd9b857eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cross-platform function to close a socket. <br /></td></tr>
 <tr class="separator:a89a7b1b0ea2e73dc31bed4fcd9b857eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:aabbe492c60331b13038e39d4207940e0" id="r_aabbe492c60331b13038e39d4207940e0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aabbe492c60331b13038e39d4207940e0">OperationCode</a> { <a class="el" href="#aabbe492c60331b13038e39d4207940e0ae163e0b629b656588875c6da584be430">RRQ</a> = 1
+<tr class="memitem:aabbe492c60331b13038e39d4207940e0" id="r_aabbe492c60331b13038e39d4207940e0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aabbe492c60331b13038e39d4207940e0">OperationCode</a> { <br />
+&#160;&#160;<a class="el" href="#aabbe492c60331b13038e39d4207940e0ae163e0b629b656588875c6da584be430">RRQ</a> = 1
 , <a class="el" href="#aabbe492c60331b13038e39d4207940e0a4b1e86a8ec7c469dc35d1f2aad701474">WRQ</a>
 , <a class="el" href="#aabbe492c60331b13038e39d4207940e0a11563127ec3be864b514a1784c5d37a6">DEL</a>
+, <a class="el" href="#aabbe492c60331b13038e39d4207940e0a41246e9c8691b7e33bc79b345e06b48e">ACK</a>
+, <br />
+&#160;&#160;<a class="el" href="#aabbe492c60331b13038e39d4207940e0a956cb36b0021530aae0a4381a9d83cf2">ERROR_PACKET</a>
+<br />
  }</td></tr>
 <tr class="memdesc:aabbe492c60331b13038e39d4207940e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration of operation codes for client-server communication.  <a href="#aabbe492c60331b13038e39d4207940e0">More...</a><br /></td></tr>
 <tr class="separator:aabbe492c60331b13038e39d4207940e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,6 +150,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a7338779dad7df62260bae6a009792593" id="r_a7338779dad7df62260bae6a009792593"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7338779dad7df62260bae6a009792593">decrypt_data</a> (const std::vector&lt; uint8_t &gt; &amp;data)</td></tr>
 <tr class="memdesc:a7338779dad7df62260bae6a009792593"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts a block of data.  <br /></td></tr>
 <tr class="separator:a7338779dad7df62260bae6a009792593"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b6ea6d08ed4cdad497260f35d0ac269" id="r_a1b6ea6d08ed4cdad497260f35d0ac269"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b6ea6d08ed4cdad497260f35d0ac269">log_error</a> (const std::string &amp;message)</td></tr>
+<tr class="memdesc:a1b6ea6d08ed4cdad497260f35d0ac269"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs an error message to a file.  <br /></td></tr>
+<tr class="separator:a1b6ea6d08ed4cdad497260f35d0ac269"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7947b224678c442a53894b601836d01d" id="r_a7947b224678c442a53894b601836d01d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7947b224678c442a53894b601836d01d">validate_directories</a> ()</td></tr>
+<tr class="memdesc:a7947b224678c442a53894b601836d01d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validates the existence of necessary directories for file storage.  <br /></td></tr>
+<tr class="separator:a7947b224678c442a53894b601836d01d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -148,28 +163,15 @@ Variables</h2></td></tr>
 constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><b>PACKET_SIZE</b> = 512</td></tr>
 <tr class="memdesc:a8e5db1eccb7e9c6932593d8865d3c7d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum packet size for UDP communication. <br /></td></tr>
 <tr class="separator:a8e5db1eccb7e9c6932593d8865d3c7d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6d6d706e9c97138f897b2944eb7a2d7" id="r_ae6d6d706e9c97138f897b2944eb7a2d7"><td class="memItemLeft" align="right" valign="top"><a id="ae6d6d706e9c97138f897b2944eb7a2d7" name="ae6d6d706e9c97138f897b2944eb7a2d7"></a>
+constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>ACK_TIMEOUT</b> = 1000</td></tr>
+<tr class="memdesc:ae6d6d706e9c97138f897b2944eb7a2d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acknowledgment timeout in milliseconds. <br /></td></tr>
+<tr class="separator:ae6d6d706e9c97138f897b2944eb7a2d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Contains shared constants, enums, structs, and helper functions for the UDP File Transfer System. </p>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a89a7b1b0ea2e73dc31bed4fcd9b857eb" name="a89a7b1b0ea2e73dc31bed4fcd9b857eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89a7b1b0ea2e73dc31bed4fcd9b857eb">&#9670;&#160;</a></span>CLOSE_SOCKET</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CLOSE_SOCKET&#160;&#160;&#160;close</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Cross-platform function to close a socket. </p>
-<p>Defines a macro for closing a socket that works across different operating systems. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
+<div class="textblock"><p>UDP File Transfer System Header File. </p>
+<dl class="section author"><dt>Author</dt><dd></dd></dl>
+</div><h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="aabbe492c60331b13038e39d4207940e0" name="aabbe492c60331b13038e39d4207940e0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aabbe492c60331b13038e39d4207940e0">&#9670;&#160;</a></span>OperationCode</h2>
 
@@ -189,6 +191,10 @@ constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><b>PACKET_SI
 <tr><td class="fieldname"><a id="aabbe492c60331b13038e39d4207940e0a4b1e86a8ec7c469dc35d1f2aad701474" name="aabbe492c60331b13038e39d4207940e0a4b1e86a8ec7c469dc35d1f2aad701474"></a>WRQ&#160;</td><td class="fielddoc"><p>Write Request (Upload a file) </p>
 </td></tr>
 <tr><td class="fieldname"><a id="aabbe492c60331b13038e39d4207940e0a11563127ec3be864b514a1784c5d37a6" name="aabbe492c60331b13038e39d4207940e0a11563127ec3be864b514a1784c5d37a6"></a>DEL&#160;</td><td class="fielddoc"><p>Delete Request (Remove a file) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aabbe492c60331b13038e39d4207940e0a41246e9c8691b7e33bc79b345e06b48e" name="aabbe492c60331b13038e39d4207940e0a41246e9c8691b7e33bc79b345e06b48e"></a>ACK&#160;</td><td class="fielddoc"><p>Acknowledgment <a class="el" href="struct_packet.html" title="Represents a packet used in the UDP File Transfer System.">Packet</a>. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aabbe492c60331b13038e39d4207940e0a956cb36b0021530aae0a4381a9d83cf2" name="aabbe492c60331b13038e39d4207940e0a956cb36b0021530aae0a4381a9d83cf2"></a>ERROR_PACKET&#160;</td><td class="fielddoc"><p>Error <a class="el" href="struct_packet.html" title="Represents a packet used in the UDP File Transfer System.">Packet</a>. </p>
 </td></tr>
 </table>
 
@@ -211,14 +217,13 @@ constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><b>PACKET_SI
 </div><div class="memdoc">
 
 <p>Computes a checksum for a given data vector. </p>
-<p>This function generates a checksum for a block of data to ensure its integrity.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">data</td><td>The data block for which to compute the checksum. </td></tr>
+    <tr><td class="paramname">data</td><td>The data vector for which the checksum is to be computed. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A 32-bit checksum value. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The computed checksum as a 32-bit unsigned integer. </dd></dl>
 
 </div>
 </div>
@@ -238,14 +243,13 @@ constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><b>PACKET_SI
 </div><div class="memdoc">
 
 <p>Decrypts a block of data. </p>
-<p>Decrypts data received from the client or server.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">data</td><td>The data to decrypt. </td></tr>
+    <tr><td class="paramname">data</td><td>The data vector to decrypt. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A vector containing the decrypted data. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The decrypted data as a vector of uint8_t. </dd></dl>
 
 </div>
 </div>
@@ -265,14 +269,67 @@ constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><b>PACKET_SI
 </div><div class="memdoc">
 
 <p>Encrypts a block of data. </p>
-<p>Encrypts data to ensure secure transmission between the client and server.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">data</td><td>The data to encrypt. </td></tr>
+    <tr><td class="paramname">data</td><td>The data vector to encrypt. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A vector containing the encrypted data. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The encrypted data as a vector of uint8_t. </dd></dl>
+
+</div>
+</div>
+<a id="a1b6ea6d08ed4cdad497260f35d0ac269" name="a1b6ea6d08ed4cdad497260f35d0ac269"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b6ea6d08ed4cdad497260f35d0ac269">&#9670;&#160;</a></span>log_error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void log_error </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>error_message</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Logs an error message to a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>The error message to log.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Logs an error message to a file.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">error_message</td><td>The error message to log. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7947b224678c442a53894b601836d01d" name="a7947b224678c442a53894b601836d01d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7947b224678c442a53894b601836d01d">&#9670;&#160;</a></span>validate_directories()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void validate_directories </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Validates the existence of necessary directories for file storage. </p>
+<p>Creates directories if they do not exist.</p>
+<p>Validates the existence of necessary directories for file storage.</p>
+<p>Creates <code>SERVER_STORAGE_DIR</code> and <code>BACKUP_STORAGE_DIR</code> if they do not exist. </p>
 
 </div>
 </div>
@@ -296,15 +353,14 @@ constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><b>PACKET_SI
 </div><div class="memdoc">
 
 <p>Verifies the checksum of a given data block. </p>
-<p>Checks if the provided checksum matches the calculated checksum for the data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">data</td><td>The data block to verify. </td></tr>
-    <tr><td class="paramname">checksum</td><td>The checksum to compare against. </td></tr>
+    <tr><td class="paramname">data</td><td>The data vector to verify. </td></tr>
+    <tr><td class="paramname">checksum</td><td>The expected checksum. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the checksum matches, false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the checksum is valid, false otherwise. </dd></dl>
 
 </div>
 </div>

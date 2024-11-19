@@ -26,10 +26,11 @@ digraph UDP_File_Transfer_Workflow {
 
         Server -> Storage [label="Access File"];
         Storage -> Server [label="File Data"];
-        Server -> Backup [label="Save Backup (WRQ)"];
+        Server -> Backup [label="Save Backup (on WRQ)"];
         Backup -> Server [label="Recover File on Demand"];
     }
 
-    Client_App -> Server [label="Send File Data (WRQ)"];
-    Server -> Client_App [label="Send File Data (RRQ)"];
+    Client_App -> Server [label="Upload File Data (WRQ)", style=dotted];
+    Server -> Client_App [label="Download File Data (RRQ)", style=solid];
+    Client_App -> Server [label="Delete File Request (DEL)", style=dashed];
 }
