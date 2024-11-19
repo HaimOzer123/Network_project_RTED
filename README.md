@@ -97,6 +97,10 @@ The screenshot demonstrates the UDP-based file transfer system in action. Key ob
 ---
 
 ## How to Run the Project  
+### Install : 
+* sudo apt update
+* sudo apt install libssl-dev
+
 ### 1. Compile the Code 
 * g++ server.cpp udp_file_transfer.cpp -o server
 * g++ client.cpp udp_file_transfer.cpp -o client

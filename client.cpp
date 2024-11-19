@@ -1,7 +1,6 @@
 /**
  * @file client.cpp
- * @author 
- * @brief UDP File Transfer Client
+ * @brief UDP File Transfer Client with AES Encryption
  */
 
 #include "udp_file_transfer.hpp"
@@ -9,12 +8,12 @@
 #include <fstream>
 #include <thread>
 #include <chrono>
+#include <openssl/rand.h>
 
 #ifdef _WIN32
 #include <BaseTsd.h>
-typedef SSIZE_T ssize_t; // Use MinGW-provided type
+typedef SSIZE_T ssize_t; 
 #endif
-
 
 /**
  * @brief Displays the main menu to the user.
@@ -30,9 +29,7 @@ void show_menu() {
 
 /**
  * @brief Sends a request packet to the server and waits for acknowledgment.
- * @details This function will retry sending the request up to 3 times if no acknowledgment is received.
- *          The user will be prompted to retry if the maximum number of attempts is reached.
- *          The function returns true if the acknowledgment was received; false otherwise.
+ * @details Retries sending the request up to 3 times if no acknowledgment is received.
  * @param sockfd The socket file descriptor.
  * @param serverAddr The server address structure.
  * @param packet The packet to send.
@@ -63,11 +60,10 @@ bool send_request_with_ack(int sockfd, const sockaddr_in& serverAddr, const Pack
     return (choice == 'y' || choice == 'Y') ? send_request_with_ack(sockfd, serverAddr, packet) : false;
 }
 
-
 /**
  * @brief Sends a Read Request (RRQ) to download a file from the server.
  */
-void send_rrq(int sockfd, const sockaddr_in& serverAddr, const std::string& filename) {
+void send_rrq(int sockfd, const sockaddr_in& serverAddr, const std::string& filename, const std::string& key, const std::string& iv) {
     Packet packet = {RRQ, {}, {}, 0};
     strncpy(packet.filename, filename.c_str(), sizeof(packet.filename) - 1);
 
@@ -87,7 +83,7 @@ void send_rrq(int sockfd, const sockaddr_in& serverAddr, const std::string& file
         ssize_t received = recvfrom(sockfd, buffer, PACKET_SIZE, 0, nullptr, nullptr);
         if (received <= 0) break;
 
-        std::vector<uint8_t> decrypted = decrypt_data(std::vector<uint8_t>(buffer, buffer + received));
+        std::vector<uint8_t> decrypted = aes_decrypt(std::vector<uint8_t>(buffer, buffer + received), key, iv);
         if (!verify_checksum(decrypted, packet.checksum)) {
             std::cerr << "Error: Checksum mismatch for " << filename << '\n';
             continue;
@@ -105,7 +101,7 @@ void send_rrq(int sockfd, const sockaddr_in& serverAddr, const std::string& file
 /**
  * @brief Sends a Write Request (WRQ) to upload a file to the server.
  */
-void send_wrq(int sockfd, const sockaddr_in& serverAddr, const std::string& filename) {
+void send_wrq(int sockfd, const sockaddr_in& serverAddr, const std::string& filename, const std::string& key, const std::string& iv) {
     Packet packet = {WRQ, {}, {}, 0};
     strncpy(packet.filename, filename.c_str(), sizeof(packet.filename) - 1);
 
@@ -117,8 +113,7 @@ void send_wrq(int sockfd, const sockaddr_in& serverAddr, const std::string& file
 
     while (file.read(reinterpret_cast<char*>(packet.data), sizeof(packet.data)) || file.gcount() > 0) {
         packet.dataSize = file.gcount();
-        std::vector<uint8_t> encrypted = encrypt_data(
-            std::vector<uint8_t>(packet.data, packet.data + packet.dataSize));
+        std::vector<uint8_t> encrypted = aes_encrypt(std::vector<uint8_t>(packet.data, packet.data + packet.dataSize), key, iv);
         memcpy(packet.data, encrypted.data(), encrypted.size());
         packet.checksum = calculate_checksum(encrypted);
 
@@ -165,6 +160,16 @@ int main() {
         return -1;
     }
 
+    // Generate AES key and IV
+    std::string key(AES_KEY_SIZE, '\0');
+    std::string iv(AES_IV_SIZE, '\0');
+    RAND_bytes(reinterpret_cast<uint8_t*>(&key[0]), key.size());
+    RAND_bytes(reinterpret_cast<uint8_t*>(&iv[0]), iv.size());
+
+    // Send key and IV to the server
+    sendto(sockfd, key.data(), key.size(), 0, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
+    sendto(sockfd, iv.data(), iv.size(), 0, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
+
     while (true) {
         show_menu();
 
@@ -182,10 +187,10 @@ int main() {
 
         switch (choice) {
             case 1:
-                send_rrq(sockfd, serverAddr, filename);
+                send_rrq(sockfd, serverAddr, filename, key, iv);
                 break;
             case 2:
-                send_wrq(sockfd, serverAddr, filename);
+                send_wrq(sockfd, serverAddr, filename, key, iv);
                 break;
             case 3:
                 send_del(sockfd, serverAddr, filename);
