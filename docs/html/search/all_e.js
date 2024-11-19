@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['udp_20file_20transfer_20system_0',['UDP File Transfer System',['../index.html',1,'']]],
-  ['udp_20vs_20ftp_1',['Key Differences: UDP vs. FTP',['../index.html#autotoc_md8',1,'']]],
-  ['udp_5ffile_5ftransfer_2ehpp_2',['udp_file_transfer.hpp',['../udp__file__transfer_8hpp.html',1,'']]]
+  ['the_20code_0',['1. Compile the Code',['../index.html#autotoc_md17',1,'']]],
+  ['the_20project_1',['How to Run the Project',['../index.html#autotoc_md16',1,'']]],
+  ['to_20run_20the_20project_2',['How to Run the Project',['../index.html#autotoc_md16',1,'']]],
+  ['transfer_20system_3',['UDP File Transfer System',['../index.html',1,'']]]
 ];

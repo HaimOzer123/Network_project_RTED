@@ -76,8 +76,11 @@ The diagram above illustrates the workflow of the system, highlighting interacti
 
 ## How to Run the Project  
 
-### 1. Compile the Code  
-Use your preferred C++ compiler (e.g., `g++`) to compile both the client and server applications.  
+### 1. Compile the Code 
 
-g++ client.cpp -o client
-g++ server.cpp -o server
+ * g++ client.cpp -o client 
+ * g++ server.cpp -o server
+
+### 2. Run 
+* ./server
+* ./client

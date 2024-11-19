@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['key_20differences_3a_20udp_20vs_20ftp_0',['Key Differences: UDP vs. FTP',['../index.html#autotoc_md8',1,'']]],
-  ['key_20features_1',['Key Features',['../index.html#autotoc_md6',1,'']]]
+  ['how_20to_20run_20the_20project_0',['How to Run the Project',['../index.html#autotoc_md16',1,'']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['main_0',['main',['../client_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;client.cpp'],['../server_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;server.cpp']]]
+  ['key_20differences_3a_20udp_20vs_20ftp_0',['Key Differences: UDP vs. FTP',['../index.html#autotoc_md8',1,'']]],
+  ['key_20features_1',['Key Features',['../index.html#autotoc_md6',1,'']]]
 ];
