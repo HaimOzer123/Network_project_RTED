@@ -88,17 +88,47 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md__r_e_a_d_m_e"></a></p>
-<h1><a class="anchor" id="autotoc_md1"></a>
-Haim Ozer - 316063569</h1>
-<p>Nov 2024 | RTED collage</p>
-<p>This project implements a UDP-based file transfer system similar to TFTP (Trivial File Transfer Protocol) with enhanced features such as packet acknowledgment, encryption, and file recovery.</p>
+<p><b>Author:</b> Haim Ozer <br  />
+ <b>ID:</b> 316063569 <br  />
+ <b>Date:</b> November 2024 <br  />
+ <b>Institution:</b> RTED College <br  />
+</p>
+<hr  />
 <h1><a class="anchor" id="autotoc_md2"></a>
+Overview</h1>
+<p>This project implements a lightweight UDP-based file transfer system inspired by TFTP (Trivial File Transfer Protocol). It provides enhanced functionality for file uploads, downloads, and deletions, along with features like packet acknowledgment, encryption, and file recovery. The system is designed for real-time applications where speed and efficiency are critical.</p>
+<hr  />
+<h1><a class="anchor" id="autotoc_md4"></a>
 Workflow Diagram</h1>
 <div class="image">
 <object type="image/svg+xml" data="workflow.svg" style="pointer-events: none;"></object>
 <div class="caption">
 Workflow Diagram</div></div>
-    <h1><a class="anchor" id="autotoc_md3"></a>
+    <p>The diagram above illustrates the workflow of the system, highlighting interactions between the user, client, server, and file storage.</p>
+<hr  />
+<h1><a class="anchor" id="autotoc_md6"></a>
+Key Features</h1>
+<ol type="1">
+<li><b>File Upload (WRQ)</b>: <br  />
+ Users can upload files to the server with data sent in packets, each acknowledged by the server for reliable delivery. <br  />
+</li>
+<li><b>File Download (RRQ)</b>: <br  />
+ Users can request files from the server, which are transmitted in chunks to ensure data integrity. <br  />
+</li>
+<li><b>File Deletion (DEL)</b>: <br  />
+ Users can delete files stored on the server. <br  />
+</li>
+<li><b>Encryption</b>: <br  />
+ All file data is encrypted during transmission to enhance security. <br  />
+</li>
+<li><b><a class="el" href="struct_packet.html" title="Represents a packet used in the UDP File Transfer System.">Packet</a> Acknowledgment</b>: <br  />
+ Custom acknowledgment mechanisms improve reliability over the standard UDP protocol. <br  />
+</li>
+<li><b>Backup and Recovery</b>: <br  />
+ Uploaded files are backed up on the server for recovery in case of accidental deletion or data corruption.</li>
+</ol>
+<hr  />
+<h1><a class="anchor" id="autotoc_md8"></a>
 Key Differences: UDP vs. FTP</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -114,20 +144,46 @@ Key Differences: UDP vs. FTP</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Security</b>   </td><td class="markdownTableBodyNone">Minimal built-in security; relies on additional encryption   </td><td class="markdownTableBodyNone">More secure with built-in authentication and encryption   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md4"></a>
-Features of the Project</h1>
+<hr  />
+<h1><a class="anchor" id="autotoc_md10"></a>
+System Components</h1>
+<h2><a class="anchor" id="autotoc_md11"></a>
+Client</h2>
 <ul>
-<li><b>File Upload, Download, and Deletion</b>.</li>
-<li><b>Encryption for Secure Transfers</b>.</li>
-<li><b><a class="el" href="struct_packet.html" title="Structure for UDP packets used in file transfer.">Packet</a> Acknowledgment and Reliability Enhancements</b>.</li>
-<li><b>Backup and File Recovery</b>.</li>
+<li><b>User Interface</b>: Users select operations (upload, download, or delete) and provide file names. <br  />
+</li>
+<li><b><a class="el" href="struct_packet.html" title="Represents a packet used in the UDP File Transfer System.">Packet</a> Transmission</b>: Handles data packaging, encryption, and sending requests to the server. <br  />
+</li>
+<li><b>Acknowledgment Handling</b>: Receives and processes responses from the server. <br  />
+</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md5"></a>
-How to Run</h1>
+<h2><a class="anchor" id="autotoc_md12"></a>
+Server</h2>
+<ul>
+<li><b>Request Processing</b>: Handles incoming file operations and validates client requests. <br  />
+</li>
+<li><b>File Storage</b>: Stores uploaded files and retrieves requested files. <br  />
+</li>
+<li><b>Backup System</b>: Creates backups for recovery and ensures data availability. <br  />
+</li>
+</ul>
+<hr  />
+<h1><a class="anchor" id="autotoc_md14"></a>
+Security Features</h1>
 <ol type="1">
-<li>Compile the project using your preferred C++ compiler.</li>
-<li>Start the server: ./server </li>
+<li><b>Data Encryption</b>: All file data is encrypted to prevent unauthorized access during transmission. <br  />
+</li>
+<li><b>Checksum Verification</b>: Each packet includes a checksum for integrity checks, ensuring no data corruption occurs. <br  />
+</li>
 </ol>
+<hr  />
+<h1><a class="anchor" id="autotoc_md16"></a>
+How to Run the Project</h1>
+<h2><a class="anchor" id="autotoc_md17"></a>
+1. Compile the Code</h2>
+<p>Use your preferred C++ compiler (e.g., <code>g++</code>) to compile both the client and server applications. <br  />
+</p>
+<p>g++ <a class="el" href="client_8cpp.html" title="Implements client-side logic for a UDP File Transfer System.">client.cpp</a> -o client g++ <a class="el" href="server_8cpp.html" title="Implements the server-side logic for the UDP File Transfer System.">server.cpp</a> -o server </p>
 </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->

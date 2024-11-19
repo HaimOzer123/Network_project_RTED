@@ -1,8 +1,35 @@
-digraph UDP_File_Transfer {
-    Client -> Server [label="Request (RRQ/WRQ/DEL)"];
-    Server -> Client [label="Acknowledgment (ACK)"];
-    Client -> Server [label="File Data (WRQ)"];
-    Server -> Backup [label="Save Backup"];
-    Backup -> Server [label="Recovery on Demand"];
-    Server -> Client [label="File Data (RRQ)"];
+digraph UDP_File_Transfer_Workflow {
+    rankdir=LR;
+
+    subgraph cluster_Client {
+        label = "Client (User Side)";
+        style = filled;
+        color = lightblue;
+        
+        User [shape=ellipse, label="User\n(Select Operation)"];
+        Client_App [shape=box, label="Client Application"];
+
+        User -> Client_App [label="Input Operation (RRQ/WRQ/DEL)"];
+        Client_App -> Server [label="Send Request (RRQ/WRQ/DEL)"];
+        Server -> Client_App [label="Acknowledgment (ACK)"];
+        Client_App -> User [label="Operation Result/Feedback"];
+    }
+
+    subgraph cluster_Server {
+        label = "Server (System Side)";
+        style = filled;
+        color = lightgreen;
+
+        Server [shape=box, label="Server Application"];
+        Storage [shape=folder, label="File Storage"];
+        Backup [shape=folder, label="Backup Storage"];
+
+        Server -> Storage [label="Access File"];
+        Storage -> Server [label="File Data"];
+        Server -> Backup [label="Save Backup (WRQ)"];
+        Backup -> Server [label="Recover File on Demand"];
+    }
+
+    Client_App -> Server [label="Send File Data (WRQ)"];
+    Server -> Client_App [label="Send File Data (RRQ)"];
 }

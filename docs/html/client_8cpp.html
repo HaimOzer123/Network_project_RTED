@@ -90,22 +90,33 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 
-<p>Implements the client-side logic for the UDP File Transfer System.  
+<p>Implements client-side logic for a UDP File Transfer System.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="udp__file__transfer_8hpp_source.html">udp_file_transfer.hpp</a>&quot;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;cstring&gt;</code><br />
+<code>#include &lt;fstream&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ae855710ada74ff5c9bb72532c94b1b12" id="r_ae855710ada74ff5c9bb72532c94b1b12"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae855710ada74ff5c9bb72532c94b1b12">send_request</a> (const std::string &amp;serverIP, int port, const <a class="el" href="struct_packet.html">Packet</a> &amp;packet)</td></tr>
-<tr class="memdesc:ae855710ada74ff5c9bb72532c94b1b12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a request to the server and handles the response.  <br /></td></tr>
+<tr class="memdesc:ae855710ada74ff5c9bb72532c94b1b12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a request packet to the server.  <br /></td></tr>
 <tr class="separator:ae855710ada74ff5c9bb72532c94b1b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95df5ceb0821adfc020aa899f8e409b9" id="r_a95df5ceb0821adfc020aa899f8e409b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a95df5ceb0821adfc020aa899f8e409b9">send_rrq</a> (const std::string &amp;serverIP, int port, const std::string &amp;filename)</td></tr>
+<tr class="memdesc:a95df5ceb0821adfc020aa899f8e409b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a Read Request (RRQ) to the server to download a file.  <br /></td></tr>
+<tr class="separator:a95df5ceb0821adfc020aa899f8e409b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9c1c02caeed9aa5aee2810d9e88db45" id="r_ab9c1c02caeed9aa5aee2810d9e88db45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab9c1c02caeed9aa5aee2810d9e88db45">send_wrq</a> (const std::string &amp;serverIP, int port, const std::string &amp;filename)</td></tr>
+<tr class="memdesc:ab9c1c02caeed9aa5aee2810d9e88db45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a Write Request (WRQ) to the server to upload a file.  <br /></td></tr>
+<tr class="separator:ab9c1c02caeed9aa5aee2810d9e88db45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2750e42283a73a103bc111c1b3847e76" id="r_a2750e42283a73a103bc111c1b3847e76"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2750e42283a73a103bc111c1b3847e76">send_del</a> (const std::string &amp;serverIP, int port, const std::string &amp;filename)</td></tr>
+<tr class="memdesc:a2750e42283a73a103bc111c1b3847e76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a Delete Request (DEL) to the server to delete a file.  <br /></td></tr>
+<tr class="separator:a2750e42283a73a103bc111c1b3847e76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4" id="r_ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
-<tr class="memdesc:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The entry point of the client application. Sends a read request (RRQ) to the server to download a file.  <br /></td></tr>
+<tr class="memdesc:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The main entry point for the client application.  <br /></td></tr>
 <tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Implements the client-side logic for the UDP File Transfer System. </p>
+<div class="textblock"><p>Implements client-side logic for a UDP File Transfer System. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="ae66f6b31b5ad750f1fe042a706a4e3d4" name="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae66f6b31b5ad750f1fe042a706a4e3d4">&#9670;&#160;</a></span>main()</h2>
@@ -122,8 +133,47 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>The entry point of the client application. Sends a read request (RRQ) to the server to download a file. </p>
+<p>The main entry point for the client application. </p>
+<p>The user is prompted to choose an operation: Read Request (RRQ), Write Request (WRQ), or Delete Request (DEL). Based on the input, the appropriate function is invoked.</p>
 <dl class="section return"><dt>Returns</dt><dd>int Exit code. </dd></dl>
+<p>&lt; The server's IP address</p>
+<p>&lt; The server's port number</p>
+
+</div>
+</div>
+<a id="a2750e42283a73a103bc111c1b3847e76" name="a2750e42283a73a103bc111c1b3847e76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2750e42283a73a103bc111c1b3847e76">&#9670;&#160;</a></span>send_del()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void send_del </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>serverIP</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>port</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>filename</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sends a Delete Request (DEL) to the server to delete a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">serverIP</td><td>The server's IP address. </td></tr>
+    <tr><td class="paramname">port</td><td>The server's port number. </td></tr>
+    <tr><td class="paramname">filename</td><td>The name of the file to be deleted. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -151,12 +201,84 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Sends a request to the server and handles the response. </p>
+<p>Sends a request packet to the server. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">serverIP</td><td>The server's IP address. </td></tr>
     <tr><td class="paramname">port</td><td>The server's port number. </td></tr>
     <tr><td class="paramname">packet</td><td>The packet containing the request to be sent. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a95df5ceb0821adfc020aa899f8e409b9" name="a95df5ceb0821adfc020aa899f8e409b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95df5ceb0821adfc020aa899f8e409b9">&#9670;&#160;</a></span>send_rrq()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void send_rrq </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>serverIP</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>port</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>filename</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sends a Read Request (RRQ) to the server to download a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">serverIP</td><td>The server's IP address. </td></tr>
+    <tr><td class="paramname">port</td><td>The server's port number. </td></tr>
+    <tr><td class="paramname">filename</td><td>The name of the file to be downloaded. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab9c1c02caeed9aa5aee2810d9e88db45" name="ab9c1c02caeed9aa5aee2810d9e88db45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9c1c02caeed9aa5aee2810d9e88db45">&#9670;&#160;</a></span>send_wrq()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void send_wrq </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>serverIP</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>port</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>filename</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sends a Write Request (WRQ) to the server to upload a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">serverIP</td><td>The server's IP address. </td></tr>
+    <tr><td class="paramname">port</td><td>The server's port number. </td></tr>
+    <tr><td class="paramname">filename</td><td>The name of the file to be uploaded. </td></tr>
   </table>
   </dd>
 </dl>
