@@ -19,6 +19,29 @@ The diagram above illustrates the workflow of the system, highlighting interacti
 
 ---
 
+## Testing Print-screen  
+
+![Testing Print-Screen](docs/Screenshot1.png)
+
+The screenshot demonstrates the UDP-based file transfer system in action. Key observations:
+
+1. **Server and Client Communication:**
+
+* The server is listening on port 12345 and successfully processes client requests.
+* The client interacts with the server to perform file operations, such as uploading (WRQ), downloading (RRQ), and deleting (DEL).
+
+2. **Wireshark Capture:**
+
+* Wireshark is used to monitor UDP traffic between the client and server.
+* The UDP stream highlights the data being transferred, including the success messages for file operations like File uploaded successfully and File deleted.
+
+3. **System Behavior:**
+
+* The client retries file operations when acknowledgments are not received, demonstrating the reliability mechanisms in the code.
+* Successful requests are confirmed in both the client terminal and server logs. 
+
+---
+
 ## Key Features  
 
 1. **File Upload (WRQ)**:  
@@ -68,18 +91,15 @@ The diagram above illustrates the workflow of the system, highlighting interacti
 ---
 
 ## Security Features  
-
 1. **Data Encryption**: All file data is encrypted to prevent unauthorized access during transmission.  
 2. **Checksum Verification**: Each packet includes a checksum for integrity checks, ensuring no data corruption occurs.  
 
 ---
 
 ## How to Run the Project  
-
 ### 1. Compile the Code 
-
- * g++ client.cpp -o client 
- * g++ server.cpp -o server
+* g++ server.cpp udp_file_transfer.cpp -o server
+* g++ client.cpp udp_file_transfer.cpp -o client
 
 ### 2. Run 
 * ./server

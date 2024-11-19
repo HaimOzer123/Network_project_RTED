@@ -107,6 +107,35 @@ Workflow Diagram</div></div>
     <p>The diagram above illustrates the workflow of the system, highlighting interactions between the user, client, server, and file storage.</p>
 <hr  />
 <h1><a class="anchor" id="autotoc_md6"></a>
+Testing Print-screen</h1>
+<div class="image">
+<img src="Screenshot1.png" alt=""/>
+<div class="caption">
+Testing Print-Screen</div></div>
+    <p>The screenshot demonstrates the UDP-based file transfer system in action. Key observations:</p>
+<ol type="1">
+<li><b>Server and Client Communication:</b></li>
+</ol>
+<ul>
+<li>The server is listening on port 12345 and successfully processes client requests.</li>
+<li>The client interacts with the server to perform file operations, such as uploading (WRQ), downloading (RRQ), and deleting (DEL).</li>
+</ul>
+<ol type="1">
+<li><b>Wireshark Capture:</b></li>
+</ol>
+<ul>
+<li>Wireshark is used to monitor UDP traffic between the client and server.</li>
+<li>The UDP stream highlights the data being transferred, including the success messages for file operations like File uploaded successfully and File deleted.</li>
+</ul>
+<ol type="1">
+<li><b>System Behavior:</b></li>
+</ol>
+<ul>
+<li>The client retries file operations when acknowledgments are not received, demonstrating the reliability mechanisms in the code.</li>
+<li>Successful requests are confirmed in both the client terminal and server logs.</li>
+</ul>
+<hr  />
+<h1><a class="anchor" id="autotoc_md8"></a>
 Key Features</h1>
 <ol type="1">
 <li><b>File Upload (WRQ)</b>: <br  />
@@ -128,7 +157,7 @@ Key Features</h1>
  Uploaded files are backed up on the server for recovery in case of accidental deletion or data corruption.</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md8"></a>
+<h1><a class="anchor" id="autotoc_md10"></a>
 Key Differences: UDP vs. FTP</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -145,9 +174,9 @@ Key Differences: UDP vs. FTP</h1>
 <td class="markdownTableBodyNone"><b>Security</b>   </td><td class="markdownTableBodyNone">Minimal built-in security; relies on additional encryption   </td><td class="markdownTableBodyNone">More secure with built-in authentication and encryption   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md10"></a>
+<h1><a class="anchor" id="autotoc_md12"></a>
 System Components</h1>
-<h2><a class="anchor" id="autotoc_md11"></a>
+<h2><a class="anchor" id="autotoc_md13"></a>
 Client</h2>
 <ul>
 <li><b>User Interface</b>: Users select operations (upload, download, or delete) and provide file names. <br  />
@@ -157,7 +186,7 @@ Client</h2>
 <li><b>Acknowledgment Handling</b>: Receives and processes responses from the server. <br  />
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md12"></a>
+<h2><a class="anchor" id="autotoc_md14"></a>
 Server</h2>
 <ul>
 <li><b>Request Processing</b>: Handles incoming file operations and validates client requests. <br  />
@@ -168,7 +197,7 @@ Server</h2>
 </li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md14"></a>
+<h1><a class="anchor" id="autotoc_md16"></a>
 Security Features</h1>
 <ol type="1">
 <li><b>Data Encryption</b>: All file data is encrypted to prevent unauthorized access during transmission. <br  />
@@ -177,15 +206,15 @@ Security Features</h1>
 </li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md16"></a>
+<h1><a class="anchor" id="autotoc_md18"></a>
 How to Run the Project</h1>
-<h2><a class="anchor" id="autotoc_md17"></a>
+<h2><a class="anchor" id="autotoc_md19"></a>
 1. Compile the Code</h2>
 <ul>
-<li>g++ <a class="el" href="client_8cpp.html" title="UDP File Transfer Client.">client.cpp</a> -o client</li>
-<li>g++ <a class="el" href="server_8cpp.html" title="UDP File Transfer server.">server.cpp</a> -o server</li>
+<li>g++ <a class="el" href="server_8cpp.html" title="UDP File Transfer server.">server.cpp</a> <a class="el" href="udp__file__transfer_8cpp.html" title="UDP File Transfer System Implementation File.">udp_file_transfer.cpp</a> -o server</li>
+<li>g++ <a class="el" href="client_8cpp.html" title="UDP File Transfer Client.">client.cpp</a> <a class="el" href="udp__file__transfer_8cpp.html" title="UDP File Transfer System Implementation File.">udp_file_transfer.cpp</a> -o client</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md18"></a>
+<h2><a class="anchor" id="autotoc_md20"></a>
 2. Run</h2>
 <ul>
 <li>./server</li>
